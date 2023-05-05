@@ -20,6 +20,7 @@
     --card-color-gallery: #b2b7bb;
     --box-shadow-dark: #08322d65;
     --box-shadow-light: #0c463f65;
+    --box-shadow-solid: #08322d;
     --box-shadow-invisible: #08322d00;
 }
 
@@ -59,7 +60,7 @@ h1 {
     text-align: center;
     position: relative;
     margin-top: 0.5em;
-    margin-bottom: 0.125em;
+    margin-bottom: 0.5em;
     line-height: 1;
 }
 
@@ -85,6 +86,7 @@ h2 {
     text-align: center;
     font-weight: 600;
     margin-bottom: 1.2em;
+    margin-top: -1em;
 }
 
 /* IMAGES */
@@ -108,93 +110,9 @@ figure div {
     height: max-content;
 }
 
-figure.home-image img {
-    width: min(100%, 40rem);
-}
-figure.home-image figcaption {
-    font-size: clamp(0.65625rem, 4.375vw, 0.875rem);
-    font-style: italic;
-}
-
-figure.timeline-entry {
-    width: min(75vw, 20rem);
-    position: relative;
-}
-.timeline-entry:nth-child(2n) {
-    justify-self: right;
-}
-.timeline-entry:nth-child(2n + 1) {
-    justify-self: left;
-}
-figure.timeline-entry figcaption {
-    position: absolute;
-    width: min(67.5vw, 18rem);
-    top: 30%;
-    font-size: min(3.75vw, 1rem);
-    line-height: 1.5;
-}
-
-section.timeline {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    justify-items: center;
-    max-width: 25rem;
-    margin-inline: auto;
-}
-section.gallery-subpage {
-    margin-top: 2rem;
-}
-section.gallery {
-    padding: 0.75rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-}
-section.gallery figure {
-    background-color: var(--card-color-gallery);
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    box-shadow: 0 0 0.5rem 0.25rem var(--box-shadow-invisible);
-    transition: 0.2s ease-in-out box-shadow,
-                0.2S ease-in-out transform;
-}
-section.gallery figure:hover {
-    transform: scale(1.02);
-    z-index: 5;
-    box-shadow: 0 0 0.5rem 0.25rem var(--box-shadow-dark);
-}
-section.gallery figure .figure-container {
-    aspect-ratio: 1;
-}
-
 figcaption {
-    padding-top: 0.5rem;
+    padding-top: 0.5em;
     font-size: 0.875rem;
-}
-.gallery-subpage figcaption {
-    width: min(85vw, 25rem);
-    padding-top: 1.25rem;
-    margin: auto;
-}
-
-@media screen and (width < 1000px) {
-    section.gallery {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-@media screen and (width < 768px) {
-    section.gallery {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-@media screen and (width < 500px) {
-    section.gallery {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* VIDEOS */
@@ -202,6 +120,9 @@ figcaption {
 .video-container {
     display: flex;
     justify-content: center;
+    border: 1vw solid var(--box-shadow-solid);
+    border-radius: 0.5vw;
+    box-shadow: 0 0 1vw 0.5vw var(--box-shadow-dark);
 }
 
 .video-container iframe {
@@ -318,7 +239,125 @@ nav a:hover {
     }
 }
 
-/* SPECIFIC GALLERY CSS */
+/* HOME/ABOUT */
+
+figure.home-image img {
+    width: min(100%, 40rem);
+}
+figure.home-image figcaption {
+    font-size: clamp(0.65625rem, 4.375vw, 0.875rem);
+    font-style: italic;
+}
+
+/* TIMELINE */
+
+main.timeline-container {
+    margin: 0;
+    overflow-x: clip;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+section.timeline {
+    display: grid;
+    width: min(120vw, 32em);
+    padding-inline: min(16.875vw, 4.5em);
+    padding-block: min(3vw, 0.8em);
+    grid-template-columns: 1fr 4fr;
+    grid-auto-flow: row;
+    gap: min(3vw, 0.8em);
+    justify-items: center;
+    align-items: center;
+    background-image: url(images/timeline/png/background.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    image-rendering: pixelated;
+}
+figure.timeline-entry {
+    width: 100%;
+    position: relative;
+    transition: 0.2s ease-in-out transform;
+    cursor: pointer;
+}
+figure.timeline-entry figcaption {
+    position: absolute;
+    width: 90%;
+    top: 30%;
+    font-size: min(3.75vw, 1rem);
+    line-height: 1.5;
+}
+figure.timeline-entry.timeline-hidden {
+    transform: scale(0);
+    cursor: default;
+}
+figure.timeline-folder {
+    width: 100%;
+    aspect-ratio: 1;
+    position: relative;
+    cursor: pointer;
+}
+figure.timeline-folder figcaption {
+    font-family: "Sysfont", sans-serif;
+    font-size: min(3.75vw, 1rem);
+    padding-top: 0.5em;
+    position: absolute;
+}
+
+/* GALLERY */
+
+section.gallery-subpage {
+    margin-top: 2rem;
+}
+section.gallery {
+    padding: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+}
+section.gallery figure {
+    background-color: var(--card-color-gallery);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    box-shadow: 0 0 0.5rem 0.25rem var(--box-shadow-invisible);
+    transition: 0.2s ease-in-out box-shadow,
+                0.2S ease-in-out transform;
+}
+section.gallery figure:hover {
+    transform: scale(1.02);
+    z-index: 5;
+    box-shadow: 0 0 0.5rem 0.25rem var(--box-shadow-dark);
+}
+section.gallery figure .figure-container {
+    aspect-ratio: 1;
+}
+
+.gallery-subpage figcaption {
+    width: min(85vw, 25rem);
+    padding-top: 1.25rem;
+    margin: auto;
+}
+
+@media screen and (width < 1000px) {
+    section.gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media screen and (width < 768px) {
+    section.gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (width < 500px) {
+    section.gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* SPECIFIC GALLERY ENTRY TYPES */
 
 .cards {
     display: flex;
